@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Личный кабинет{% endblock %}
+{% block content %}
+<h1 class="page-title">Личный кабинет</h1>
+
+<div class="card" style="max-width:520px;margin:0 auto 1.25rem;">
+  <h2 style="margin:0 0 0.75rem;font-size:1.1rem;">Ваши данные</h2>
+  <p style="color:var(--text-muted);margin:0 0 1rem;font-size:0.95rem;">
+    Логин и роль меняются только администратором. Имя, фамилию и почту вы можете обновить сами.
+    Для работы с API по ключам доступа используйте
+    <a href="/api/docs/swagger/">интерактивную документацию</a>.
+  </p>
+  <div class="cabinet-stats">
+    <div class="stat"><span>Логин</span><span>{{ user.username }}</span></div>
+    <div class="stat"><span>Роль</span><span>{{ role_label }}</span></div>
+    <div class="stat"><span>Дата регистрации</span><span>{{ user.date_joined|date:"d.m.Y H:i" }}</span></div>
+  </div>
+</div>
+
+<div class="card form-card" style="max-width:520px;margin:0 auto 1.25rem;">
+  <h2 style="margin:0 0 1rem;font-size:1.1rem;">Изменить профиль</h2>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <ul class="errorlist">{% for e in form.non_field_errors %}<li>{{ e }}</li>{% endfor %}</ul>
+    {% endif %}
+    {% for field in form %}
+      <div class="form-row">
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.errors %}
+          <ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.35rem;">Сохранить изменения</button>
+  </form>
+</div>
+
+{% if is_staff_portal %}
+<div class="card" style="max-width:520px;margin:0 auto;">
+  <h2 style="margin:0 0 0.5rem;font-size:1.1rem;">Выгрузка выдач (CSV)</h2>
+  <p style="color:var(--text-muted);font-size:0.92rem;margin:0 0 1rem;line-height:1.5;">
+    Файл для отчёта: даты считаются по дню выдачи. Поля можно оставить пустыми — выгрузятся все записи.
+  </p>
+  <form class="export-row" method="get" action="{% url 'cabinet_export_loans' %}">
+    <div class="form-row">
+      <label for="id_date_from">С даты</label>
+      <input class="site-input" type="date" name="date_from" id="id_date_from">
+    </div>
+    <div class="form-row">
+      <label for="id_date_to">По дату</label>
+      <input class="site-input" type="date" name="date_to" id="id_date_to">
+    </div>
+    <button type="submit" class="btn btn-primary" style="width:100%;">Скачать таблицу CSV</button>
+  </form>
+</div>
+{% endif %}
+
+{% if user.is_superuser or is_staff_portal %}
+  <p style="max-width:520px;margin:1.25rem auto 0;text-align:center;font-size:0.92rem;color:var(--text-muted);">
+    Назначение ролей и полное управление данными — в
+    <a href="/admin/" target="_blank" rel="noopener" style="color:#fcd34d;">админ-панели</a>.
+  </p>
+{% endif %}
+{% endblock %}

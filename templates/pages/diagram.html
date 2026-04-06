@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Схема системы{% endblock %}
+{% block content %}
+<h1 class="page-title">Схема: сущности и роли</h1>
+<p style="max-width:720px;margin:0 auto 1rem;color:var(--text-muted);text-align:center;font-size:0.95rem;">
+  Ниже — наглядная схема: кто с чем связан и кто что может делать. Подробности — в разделе
+  <a href="{% url 'faq' %}">вопросы и ответы</a>.
+</p>
+<div class="card diagram-card" style="max-width:900px;margin:0 auto;">
+  <div class="mermaid">
+flowchart TB
+  subgraph ent[Сущности и связи]
+    A[Автор] -->|написал| B[Книга]
+    B -->|участвует в| L[Выдача]
+    U[Пользователь] -->|получил| L
+  end
+  subgraph roles[Кто что делает]
+    R[Читатель]
+    Lib[Библиотекарь]
+    Adm[Администратор]
+  end
+  R -.->|каталог и свои выдачи| B
+  Lib -.->|каталог, выдача, возврат| B
+  Adm -.->|всё и роли в админке| B
+  </div>
+</div>
+<p class="page-prose" style="max-width:720px;margin:1.5rem auto 0;color:var(--text-muted);font-size:0.92rem;line-height:1.6;">
+  <strong>Кратко:</strong> читатель видит общий каталог и только свои записи о выдаче; библиотекарь ведёт книг и авторов и отмечает выдачу и возврат;
+  администратор может назначать роли через админ-панель. Программный доступ к операциям описан в
+  <a href="/api/docs/swagger/">документации</a>.
+</p>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: "dark",
+    securityLevel: "loose",
+    themeVariables: {
+      primaryColor: "#2d1f4e",
+      primaryTextColor: "#e8eaf4",
+      lineColor: "#7c6cf9",
+      secondaryColor: "#1a1535",
+      tertiaryColor: "#0c1020",
+    },
+  });
+</script>
+{% endblock %}

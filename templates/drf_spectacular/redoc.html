@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  {% block head %}
+  <title>Документация API (ReDoc) — библиотека</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap">
+  <link rel="stylesheet" href="{% static 'css/swagger_custom.css' %}">
+  <style>
+    body { margin: 0; padding: 0; }
+    #redoc-container { padding-top: 0.5rem; }
+  </style>
+  {% endblock head %}
+</head>
+<body class="swagger-page">
+  <header class="swagger-top">
+    <h1>Документация API (режим чтения)</h1>
+    <nav class="swagger-nav">
+      <a href="/">На главную</a>
+      <a href="/api/docs/swagger/">Интерактивный Swagger</a>
+      <a href="/cabinet/">Личный кабинет</a>
+    </nav>
+  </header>
+  <p class="swagger-help" style="padding-bottom:0;margin-bottom:0;">
+    <span class="swagger-help-inner" style="display:block;margin:0 1.25rem;">
+      Здесь удобно <strong>читать</strong> описание методов. Чтобы <strong>выполнять</strong> запросы с кнопками, откройте
+      <a href="/api/docs/swagger/">Swagger</a>.
+    </span>
+  </p>
+  {% block body %}
+  {% if settings %}
+  <div id="redoc-container"></div>
+  <script src="{{ redoc_standalone }}"></script>
+  <script>
+    const redocSettings = {{ settings|safe }};
+    Redoc.init("{{ schema_url }}", redocSettings, document.getElementById('redoc-container'))
+  </script>
+  {% else %}
+  <redoc spec-url="{{ schema_url }}"></redoc>
+  <script src="{{ redoc_standalone }}"></script>
+  {% endif %}
+  {% endblock body %}
+</body>
+</html>

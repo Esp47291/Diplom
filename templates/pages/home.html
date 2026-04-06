@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Управление библиотекой</h1>
+  <p>
+    REST API для каталога книг, авторов и учёта выдачи. Зарегистрируйтесь для доступа к личному кабинету
+    или пользуйтесь документацией OpenAPI для интеграций.
+  </p>
+  <p class="hero-status">
+    {% if service_ok %}
+      <span class="status-pill ok">Сервис и база данных доступны</span>
+    {% else %}
+      <span class="status-pill bad">Нет связи с базой данных — проверьте настройки</span>
+    {% endif %}
+    <a href="{% url 'health' %}" class="status-tech">технический статус</a>
+  </p>
+</section>
+
+<div class="card-grid">
+  <article class="card">
+    <h2>Регистрация</h2>
+    <p>Создайте учётную запись читателя и войдите в кабинет на сайте.</p>
+    <a class="inline" href="{% url 'site_register' %}">Перейти к регистрации →</a>
+  </article>
+  <article class="card">
+    <h2>Личный кабинет</h2>
+    <p>Просмотр профиля и роли после входа по логину и паролю.</p>
+    {% if user.is_authenticated %}
+      <a class="inline" href="{% url 'cabinet' %}">Открыть кабинет →</a>
+    {% else %}
+      <a class="inline" href="{% url 'site_login' %}">Войти →</a>
+    {% endif %}
+  </article>
+  <article class="card">
+    <h2>Администрирование</h2>
+    <p>Панель Django Admin для суперпользователей и назначения ролей библиотекаря.</p>
+    <a class="inline" href="/admin/" target="_blank" rel="noopener">Админ-панель →</a>
+  </article>
+  <article class="card">
+    <h2>Документация API</h2>
+    <p>Swagger и схема OpenAPI для Postman и клиентов.</p>
+    <a class="inline" href="/api/docs/swagger/">Swagger UI →</a>
+  </article>
+  <article class="card">
+    <h2>Памятка пользователю</h2>
+    <p>Три шага без технического жаргона и ссылка на интерактивную документацию.</p>
+    <a class="inline" href="{% url 'guide' %}">Как пользоваться →</a>
+  </article>
+  <article class="card">
+    <h2>Вопросы и схема</h2>
+    <p>Ответы на частые вопросы и наглядная схема ролей.</p>
+    <a class="inline" href="{% url 'faq' %}">FAQ →</a>
+    &nbsp;·&nbsp;
+    <a class="inline" href="{% url 'diagram' %}">Схема →</a>
+  </article>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Библиотека{% endblock %} · Library API</title>
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+</head>
+<body>
+  <div class="site-wrap">
+    <header class="site-header">
+      <nav class="nav-inner" aria-label="Основная навигация">
+        <a href="{% url 'home' %}" class="brand">
+          <span class="brand-icon" aria-hidden="true">📚</span>
+          <span>Library Hub</span>
+        </a>
+        <div class="nav-links">
+          <a href="{% url 'home' %}">Главная</a>
+          <a href="{% url 'guide' %}">Как пользоваться</a>
+          <a href="{% url 'faq' %}">FAQ</a>
+          <a href="/api/docs/swagger/">API (Swagger)</a>
+          {% if user.is_authenticated %}
+            <a href="{% url 'cabinet' %}" class="nav-accent">Личный кабинет</a>
+            <form action="{% url 'site_logout' %}" method="post" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-ghost" style="padding:0.4rem 0.75rem;font-size:0.9rem;">Выйти</button>
+            </form>
+          {% else %}
+            <a href="{% url 'site_login' %}">Вход</a>
+            <a href="{% url 'site_register' %}" class="nav-accent">Регистрация</a>
+          {% endif %}
+          <a href="{% url 'contacts' %}">Контакты</a>
+          <a href="{% url 'diagram' %}">Схема</a>
+          <a href="/admin/" class="nav-admin" target="_blank" rel="noopener">Админ-панель</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-links">
+        <a href="{% url 'guide' %}">Как пользоваться</a>
+        <a href="{% url 'faq' %}">FAQ</a>
+        <a href="{% url 'contacts' %}">Контакты</a>
+        <a href="{% url 'diagram' %}">Схема</a>
+        <a href="{% url 'health' %}">Статус /health/</a>
+      </div>
+      <span class="footer-copy">Library Management API · дипломный проект</span>
+    </footer>
+  </div>
+</body>
+</html>

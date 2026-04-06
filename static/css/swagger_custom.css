@@ -1,0 +1,255 @@
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Обёртка и подсказки (русский интерфейс вокруг Swagger UI) */
+.swagger-page {
+  min-height: 100vh;
+  background: linear-gradient(165deg, #0c1020 0%, #1a1535 45%, #0d1828 100%);
+  color: #e8eaf4;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.swagger-page a {
+  color: #7ef0e6;
+  text-decoration: none;
+}
+.swagger-page a:hover {
+  text-decoration: underline;
+}
+
+.swagger-top {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1rem;
+}
+
+.swagger-top h1 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  flex: 1 1 200px;
+  background: linear-gradient(120deg, #fff, #c4b5fd 40%, #5eead4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.swagger-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  font-size: 0.92rem;
+}
+
+.swagger-nav a {
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  background: rgba(124, 108, 249, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e8eaf4 !important;
+  text-decoration: none !important;
+}
+.swagger-nav a:hover {
+  background: rgba(124, 108, 249, 0.35);
+}
+
+.swagger-help {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+}
+
+.swagger-help-inner {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 1rem 1.15rem 1.1rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #c5cce8;
+}
+
+.swagger-help-inner strong {
+  color: #f0f4ff;
+}
+
+.swagger-help-inner ol {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+}
+.swagger-help-inner li {
+  margin-bottom: 0.45rem;
+}
+
+.swagger-help-inner code {
+  font-size: 0.85em;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  color: #a5f3fc;
+}
+
+.swagger-help-note {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.88rem;
+  color: #9aa3c2;
+}
+
+/* Подстройка самого Swagger UI под тёмную тему */
+.swagger-ui {
+  color: #e8eaf4;
+}
+
+.swagger-ui .wrapper {
+  background: transparent;
+}
+
+#swagger-ui {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem 2rem;
+}
+
+.swagger-ui .topbar {
+  display: none;
+}
+
+.swagger-ui .information-container,
+.swagger-ui .scheme-container {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.swagger-ui .info .title {
+  color: #f0f4ff;
+}
+
+.swagger-ui .info .title small pre {
+  color: #9aa3c2;
+}
+
+.swagger-ui .filter {
+  margin: 0.75rem 0 1rem;
+}
+
+.swagger-ui .filter .operation-filter-input {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.25);
+  color: #e8eaf4;
+  padding: 0.5rem 0.75rem;
+  max-width: 100%;
+}
+
+.swagger-ui .opblock-tag {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #c4b5fd !important;
+  font-size: 1.05rem !important;
+}
+
+.swagger-ui .opblock {
+  border-radius: 10px !important;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  margin-bottom: 0.65rem !important;
+}
+
+.swagger-ui .opblock.opblock-get {
+  border-left: 4px solid #5eead4 !important;
+  background: rgba(94, 234, 212, 0.06) !important;
+}
+.swagger-ui .opblock.opblock-post {
+  border-left: 4px solid #7c6cf9 !important;
+  background: rgba(124, 108, 249, 0.08) !important;
+}
+.swagger-ui .opblock.opblock-delete {
+  border-left: 4px solid #f472b6 !important;
+  background: rgba(244, 114, 182, 0.08) !important;
+}
+.swagger-ui .opblock.opblock-put,
+.swagger-ui .opblock.opblock-patch {
+  border-left: 4px solid #fcd34d !important;
+  background: rgba(252, 211, 77, 0.08) !important;
+}
+
+.swagger-ui .opblock-summary-method {
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+}
+
+.swagger-ui .btn.authorize {
+  border-radius: 10px !important;
+  background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+  border: none !important;
+  font-weight: 600 !important;
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.35);
+}
+
+.swagger-ui .btn.execute {
+  background: linear-gradient(135deg, #7c6cf9, #5b4cdb) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+
+.swagger-ui table thead tr th,
+.swagger-ui .parameter__name,
+.swagger-ui .response-col_status {
+  color: #c5cce8 !important;
+}
+
+.swagger-ui .model-box,
+.swagger-ui .model {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+.swagger-ui .dialog-ux .modal-ux {
+  background: #1a1535 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 14px !important;
+}
+
+.swagger-ui .dialog-ux .modal-ux-header h3 {
+  color: #f0f4ff !important;
+}
+
+.swagger-ui input[type="text"],
+.swagger-ui input[type="password"],
+.swagger-ui textarea {
+  background: rgba(0, 0, 0, 0.35) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #e8eaf4 !important;
+  border-radius: 8px !important;
+}
+
+.swagger-ui .opblock-summary-description,
+.swagger-ui .opblock-description-wrapper p,
+.swagger-ui .response-col_description,
+.swagger-ui table tbody tr td {
+  color: #c5cce8 !important;
+}
+
+.swagger-ui .btn.try-out__btn {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}

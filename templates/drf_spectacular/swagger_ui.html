@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  {% block head %}
+  <title>Документация API — библиотека</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% if favicon_href %}<link rel="icon" href="{{ favicon_href }}">{% endif %}
+  <link rel="stylesheet" href="{{ swagger_ui_css }}">
+  <link rel="stylesheet" href="{% static 'css/swagger_custom.css' %}">
+  <style>
+    html { box-sizing: border-box; overflow-y: scroll; }
+    *, *:after, *:before { box-sizing: inherit; }
+    body { margin: 0; }
+  </style>
+  {% endblock head %}
+</head>
+<body class="swagger-page">
+  {% block body %}
+  <header class="swagger-top">
+    <h1>Документация API библиотеки</h1>
+    <nav class="swagger-nav" aria-label="Быстрые ссылки">
+      <a href="/">На главную сайта</a>
+      <a href="/cabinet/">Личный кабинет</a>
+      <a href="/api/docs/redoc/">Документация ReDoc</a>
+      <a href="/admin/" target="_blank" rel="noopener">Админ-панель</a>
+    </nav>
+  </header>
+
+  <section class="swagger-help" aria-labelledby="help-title">
+    <h2 id="help-title" class="visually-hidden">Как пользоваться</h2>
+    <div class="swagger-help-inner">
+      <strong>Краткая инструкция (без «айти»-сленга):</strong>
+      <ol>
+        <li>
+          <strong>Войти в систему API.</strong> Нажмите зелёную кнопку <strong>«Authorize»</strong> справа сверху в блоке ниже.
+          В поле <code>value</code> вставьте токен вида <code>Bearer ВАШ_ТОКЕН</code> (слово Bearer и пробел — обязательно).
+          Токен можно получить запросом <strong>Вход и регистрация → POST /api/auth/token/</strong> (логин и пароль).
+        </li>
+        <li>
+          <strong>Найти нужный раздел.</strong> Ниже список сгруппирован по темам: авторы, книги, выдачи и т.д.
+          Строка <strong>Filter by tag</strong> — это поиск по названию операции.
+        </li>
+        <li>
+          <strong>Выполнить запрос.</strong> Раскройте нужную строку → кнопка <strong>«Try it out»</strong> → заполните поля →
+          <strong>«Execute»</strong>. Ответ появится ниже.
+        </li>
+      </ol>
+      <p class="swagger-help-note">
+        Подписи к операциям и разделам — на русском. Кнопки самого Swagger (Try it out, Execute, Authorize)
+        остаются на английском — это стандартная программа; смысл тот же, что в инструкции выше.
+      </p>
+    </div>
+  </section>
+
+  <div id="swagger-ui"></div>
+  <script src="{{ swagger_ui_bundle }}"></script>
+  <script src="{{ swagger_ui_standalone }}"></script>
+  {% if script_url %}
+  <script src="{{ script_url }}"></script>
+  {% else %}
+  <script>
+  {% include template_name_js %}
+  </script>
+  {% endif %}
+  {% endblock %}
+</body>
+</html>

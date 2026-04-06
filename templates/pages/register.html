@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Регистрация{% endblock %}
+{% block content %}
+<h1 class="page-title">Регистрация</h1>
+<div class="card form-card">
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <ul class="errorlist">{% for e in form.non_field_errors %}<li>{{ e }}</li>{% endfor %}</ul>
+    {% endif %}
+    {% for field in form %}
+      <div class="form-row">
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.errors %}
+          <ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.5rem;">Создать аккаунт</button>
+  </form>
+  <p style="margin-top:1.25rem;text-align:center;color:var(--text-muted);font-size:0.92rem;">
+    Уже есть аккаунт? <a href="{% url 'site_login' %}">Войти</a>
+  </p>
+</div>
+{% endblock %}

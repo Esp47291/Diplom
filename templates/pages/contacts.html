@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Контакты{% endblock %}
+{% block content %}
+<h1 class="page-title">Контакты</h1>
+<div class="card page-prose" style="max-width:520px;margin:0 auto;">
+  <p>
+    По вопросам работы сервиса и учебного проекта вы можете написать на электронную почту службы поддержки (ответ не гарантирован — учебный стенд).
+  </p>
+  <p style="margin-top:1.25rem;">
+    <a class="btn btn-primary" href="mailto:library-support@example.org?subject=Вопрос%20по%20библиотеке">Написать письмо</a>
+  </p>
+  <p style="color:var(--text-muted);font-size:0.9rem;margin-top:1rem;">
+    Адрес в ссылке можно заменить на реальный перед сдачей проекта: отредактируйте шаблон
+    <code>templates/pages/contacts.html</code>.
+  </p>
+</div>
+{% endblock %}

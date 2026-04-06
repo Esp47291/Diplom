@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+<h1 class="page-title">Вход</h1>
+<div class="card form-card">
+  <form method="post" action="{% url 'site_login' %}">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <ul class="errorlist">{% for e in form.non_field_errors %}<li>{{ e }}</li>{% endfor %}</ul>
+    {% endif %}
+    {% for field in form %}
+      <div class="form-row">
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.errors %}
+          <ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+        {% endif %}
+      </div>
+    {% endfor %}
+    {% if next %}
+      <input type="hidden" name="next" value="{{ next }}">
+    {% endif %}
+    <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.25rem;">Войти</button>
+  </form>
+  <p style="margin-top:1.25rem;text-align:center;color:var(--text-muted);font-size:0.92rem;">
+    Нет аккаунта? <a href="{% url 'site_register' %}">Зарегистрироваться</a>
+  </p>
+</div>
+{% endblock %}

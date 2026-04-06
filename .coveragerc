@@ -1,0 +1,10 @@
+[run]
+source = accounts,authors,books,loans,config
+omit =
+    */migrations/*
+    */tests/*
+    manage.py
+
+[report]
+fail_under = 75
+show_missing = true

@@ -1,7 +1,5 @@
 from drf_spectacular.utils import extend_schema, extend_schema_view
-from rest_framework import viewsets
-
-from accounts.permissions import IsLibrarianOrAdmin
+from rest_framework import permissions, viewsets
 
 from .filters import AuthorFilter
 from .models import Author
@@ -30,5 +28,5 @@ class AuthorViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action in ("list", "retrieve"):
-            return super().get_permissions()
-        return [IsLibrarianOrAdmin()]
+            return [permissions.AllowAny()]
+        return [permissions.IsAuthenticated()]

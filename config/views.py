@@ -14,6 +14,7 @@ from django.views.generic import FormView, TemplateView, UpdateView
 
 from accounts.models import User
 from loans.models import Loan
+from books.models import Book
 
 from .forms import ProfileEditForm, SiteRegisterForm
 
@@ -34,6 +35,31 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["service_ok"] = _database_ok()
+        return ctx
+
+
+class CatalogView(TemplateView):
+    template_name = "pages/catalog.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        q = (self.request.GET.get("q") or "").strip()
+        qs = Book.objects.select_related("author").all().order_by("title")
+        if q:
+            qs = qs.filter(title__icontains=q)
+        ctx["q"] = q
+        ctx["books"] = qs[:200]
+        ctx["books_total"] = qs.count() if q else Book.objects.count()
+        return ctx
+
+
+class BookPageView(TemplateView):
+    template_name = "pages/book_page.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        book = Book.objects.select_related("author").get(pk=kwargs["pk"])
+        ctx["book"] = book
         return ctx
 
 

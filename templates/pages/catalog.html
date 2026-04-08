@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Каталог книг{% endblock %}
+{% block content %}
+<h1 class="page-title">Каталог книг</h1>
+
+<div class="card" style="max-width:980px;margin:0 auto 1rem;">
+  <form class="search-bar" method="get" action="{% url 'catalog' %}">
+    <div class="form-row">
+      <label for="id_q">Поиск по названию</label>
+      <input class="site-input" id="id_q" name="q" type="text" value="{{ q }}" placeholder="Например: война, мастер…" />
+    </div>
+    <button class="btn btn-primary" type="submit">Найти</button>
+    {% if q %}
+      <a class="btn btn-ghost" href="{% url 'catalog' %}">Сбросить</a>
+    {% endif %}
+  </form>
+  <div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">
+    <span class="chip"><strong>{{ books_total }}</strong>&nbsp;книг</span>
+    <span class="chip">API: <a href="/api/docs/swagger/#/Книги/" style="color:var(--accent-2);">Swagger «Книги»</a></span>
+    <span class="chip">Эндпоинт: <code style="color:var(--accent-2);">GET /api/books/</code></span>
+  </div>
+</div>
+
+<div class="book-list" style="max-width:980px;margin:0 auto;">
+  {% for b in books %}
+    <article class="card">
+      <h2 style="margin:0 0 0.4rem;font-size:1.15rem;">{{ b.title }}</h2>
+      <div class="book-meta">
+        <div><strong>Автор:</strong> {{ b.author.first_name }} {{ b.author.last_name }}</div>
+        <div><strong>Жанр:</strong> {{ b.genre }}</div>
+        {% if b.publication_year %}<div><strong>Год:</strong> {{ b.publication_year }}</div>{% endif %}
+      </div>
+      <div class="book-actions">
+        <a class="btn btn-primary" href="{% url 'book_page' pk=b.id %}">Открыть страницу</a>
+        <a class="btn btn-ghost" href="/api/docs/swagger/#/Книги/">Открыть в Swagger</a>
+      </div>
+      <p style="margin:0.85rem 0 0;color:var(--text-muted);font-size:0.9rem;line-height:1.5;">
+        API-адрес: <code style="color:var(--accent-2);">GET /api/books/{{ b.id }}/</code>
+      </p>
+    </article>
+  {% empty %}
+    <div class="card">
+      <h2 style="margin:0 0 0.5rem;">Ничего не найдено</h2>
+      <p style="margin:0;color:var(--text-muted);">Попробуйте другое слово или сбросьте поиск.</p>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
+

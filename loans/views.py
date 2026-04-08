@@ -5,7 +5,6 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from accounts.models import User
-from accounts.permissions import IsLibrarianOrAdmin
 
 from .filters import LoanFilter
 from .models import Loan
@@ -47,19 +46,22 @@ class LoanViewSet(viewsets.ModelViewSet):
         return qs.filter(user=user)
 
     def get_permissions(self):
-        if self.action in ("create", "return_book"):
-            return [IsLibrarianOrAdmin()]
-        if self.action in ("update", "partial_update", "destroy"):
-            return [IsLibrarianOrAdmin()]
         return [permissions.IsAuthenticated()]
 
     @extend_schema(
         summary="Вернуть книгу",
-        description="Отмечает выдачу как возвращённую (только библиотекарь/админ).",
+        description="Отмечает выдачу как возвращённую. Доступно владельцу выдачи или персоналу.",
     )
     @action(detail=True, methods=["post"], url_path="return")
     def return_book(self, request, pk=None):
         loan = self.get_object()
+        user = request.user
+        staff = user.is_superuser or user.role in (User.Role.LIBRARIAN, User.Role.ADMIN)
+        if not staff and loan.user_id != user.id:
+            return Response(
+                {"detail": "Нельзя вернуть чужую выдачу."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
         if loan.status == Loan.Status.RETURNED:
             return Response(
                 {"detail": "Книга уже возвращена."},

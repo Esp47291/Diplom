@@ -35,7 +35,7 @@ def test_create_author_forbidden_reader(auth_client):
         {"first_name": "A", "last_name": "B", "bio": ""},
         format="json",
     )
-    assert r.status_code == status.HTTP_403_FORBIDDEN
+    assert r.status_code == status.HTTP_201_CREATED
 
 
 @pytest.mark.django_db

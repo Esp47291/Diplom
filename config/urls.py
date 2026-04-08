@@ -8,6 +8,8 @@ from drf_spectacular.views import (
 
 from .views import (
     CabinetView,
+    BookPageView,
+    CatalogView,
     ContactsView,
     DiagramView,
     FAQView,
@@ -23,6 +25,8 @@ from .views import (
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
     path("health/", HealthCheckView.as_view(), name="health"),
+    path("catalog/", CatalogView.as_view(), name="catalog"),
+    path("catalog/books/<int:pk>/", BookPageView.as_view(), name="book_page"),
     path("guide/", GuideView.as_view(), name="guide"),
     path("faq/", FAQView.as_view(), name="faq"),
     path("contacts/", ContactsView.as_view(), name="contacts"),

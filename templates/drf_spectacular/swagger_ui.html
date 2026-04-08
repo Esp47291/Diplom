@@ -34,9 +34,8 @@
       <strong>Краткая инструкция (без «айти»-сленга):</strong>
       <ol>
         <li>
-          <strong>Войти в систему API.</strong> Нажмите зелёную кнопку <strong>«Authorize»</strong> справа сверху в блоке ниже.
-          В поле <code>value</code> вставьте токен вида <code>Bearer ВАШ_ТОКЕН</code> (слово Bearer и пробел — обязательно).
-          Токен можно получить запросом <strong>Вход и регистрация → POST /api/auth/token/</strong> (логин и пароль).
+          <strong>Войти в систему API.</strong> В блоке «Быстрый вход» ниже введите логин и пароль —
+          авторизация включится автоматически (ничего копировать не нужно).
         </li>
         <li>
           <strong>Найти нужный раздел.</strong> Ниже список сгруппирован по темам: авторы, книги, выдачи и т.д.
@@ -48,8 +47,36 @@
         </li>
       </ol>
       <p class="swagger-help-note">
-        Подписи к операциям и разделам — на русском. Кнопки самого Swagger (Try it out, Execute, Authorize)
-        остаются на английском — это стандартная программа; смысл тот же, что в инструкции выше.
+        Подписи к операциям и разделам — на русском. Кнопки Swagger (Try it out, Execute)
+        остаются на английском — смысл тот же, что в инструкции выше.
+      </p>
+    </div>
+  </section>
+
+  <section class="swagger-help" aria-labelledby="quick-auth-title">
+    <h2 id="quick-auth-title" class="visually-hidden">Быстрый вход</h2>
+    <div class="swagger-help-inner">
+      <strong>Быстрый вход (чтобы ничего не копировать):</strong>
+      <p style="margin:0.5rem 0 0.9rem;">
+        Введите логин и пароль — мы получим токен и автоматически включим авторизацию для всех запросов ниже.
+      </p>
+      <form id="quick-auth-form" class="quick-auth-grid" autocomplete="on">
+        <div class="form-row" style="margin:0;">
+          <label for="quick-auth-username">Логин</label>
+          <input class="site-input" id="quick-auth-username" name="username" type="text" autocomplete="username" required>
+        </div>
+        <div class="form-row" style="margin:0;">
+          <label for="quick-auth-password">Пароль</label>
+          <input class="site-input" id="quick-auth-password" name="password" type="password" autocomplete="current-password" required>
+        </div>
+        <div style="display:flex;gap:0.5rem;align-items:flex-end;flex-wrap:wrap;">
+          <button type="submit" class="btn btn-primary">Войти и включить доступ</button>
+          <button type="button" id="quick-auth-clear" class="btn btn-ghost">Сбросить</button>
+          <span id="quick-auth-status" style="color:var(--text-muted);font-size:0.9rem;"></span>
+        </div>
+      </form>
+      <p class="swagger-help-note" style="margin-top:0.85rem;">
+        После входа вы можете выполнить любой запрос: откройте строку → <strong>Try it out</strong> → <strong>Execute</strong>.
       </p>
     </div>
   </section>

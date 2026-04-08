@@ -21,9 +21,9 @@ def test_search_books(api_client, book):
 
 
 @pytest.mark.django_db
-def test_create_book_librarian(lib_client, author):
+def test_create_book_authenticated_user(auth_client, author):
     url = reverse("book-list")
-    r = lib_client.post(
+    r = auth_client.post(
         url,
         {
             "title": "Crime and Punishment",
@@ -35,3 +35,23 @@ def test_create_book_librarian(lib_client, author):
         format="json",
     )
     assert r.status_code == status.HTTP_201_CREATED
+
+
+@pytest.mark.django_db
+def test_delete_book_forbidden_for_non_creator(api_client, author, reader_user, librarian_user):
+    from books.models import Book
+    from accounts.models import User
+
+    creator = reader_user
+    other = User.objects.create_user(
+        username="reader2",
+        email="reader2@example.com",
+        password="testpass123",
+        role=User.Role.READER,
+    )
+    b = Book.objects.create(title="To delete", author=author, genre="x", created_by=creator)
+
+    api_client.force_authenticate(user=other)
+    url = reverse("book-detail", kwargs={"pk": b.pk})
+    r = api_client.delete(url)
+    assert r.status_code == status.HTTP_403_FORBIDDEN

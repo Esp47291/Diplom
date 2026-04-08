@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ book.title }}{% endblock %}
+{% block content %}
+<div style="max-width:840px;margin:0 auto;">
+  <a href="{% url 'catalog' %}" style="color:var(--text-muted);font-size:0.92rem;">← Назад в каталог</a>
+  <h1 class="page-title" style="margin-top:0.75rem;">{{ book.title }}</h1>
+
+  <div class="card">
+    <div class="cabinet-stats" style="margin-top:0;">
+      <div class="stat"><span>Автор</span><span>{{ book.author.first_name }} {{ book.author.last_name }}</span></div>
+      <div class="stat"><span>Жанр</span><span>{{ book.genre }}</span></div>
+      <div class="stat"><span>Год</span><span>{{ book.publication_year|default:"—" }}</span></div>
+      <div class="stat"><span>ISBN</span><span>{{ book.isbn|default:"—" }}</span></div>
+    </div>
+
+    <p style="margin:1.1rem 0 0;color:var(--text-muted);line-height:1.6;">
+      <strong>Как получить данные через API:</strong><br>
+      - список всех книг: <code style="color:var(--accent-2);">GET /api/books/</code><br>
+      - эта книга: <code style="color:var(--accent-2);">GET /api/books/{{ book.id }}/</code>
+    </p>
+
+    <div class="book-actions" style="margin-top:1rem;">
+      <a class="btn btn-primary" href="/api/docs/swagger/#/Книги/">Открыть Swagger (раздел «Книги»)</a>
+      <a class="btn btn-ghost" href="/api/books/{{ book.id }}/" target="_blank" rel="noopener">Посмотреть JSON</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

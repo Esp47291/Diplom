@@ -19,5 +19,6 @@ class BookSerializer(serializers.ModelSerializer):
             "isbn",
             "publication_year",
             "created_at",
+            "created_by",
         )
-        read_only_fields = ("created_at",)
+        read_only_fields = ("created_at", "created_by")

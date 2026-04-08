@@ -21,6 +21,16 @@ def test_guide_page(client):
 
 
 @pytest.mark.django_db
+def test_catalog_page(client, author):
+    from books.models import Book
+
+    Book.objects.create(title="Demo", author=author, genre="x")
+    r = client.get(reverse("catalog"))
+    assert r.status_code == 200
+    assert "Demo" in r.content.decode()
+
+
+@pytest.mark.django_db
 def test_cabinet_requires_login(client):
     r = client.get(reverse("cabinet"))
     assert r.status_code == 302

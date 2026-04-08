@@ -1,7 +1,7 @@
 from drf_spectacular.utils import extend_schema, extend_schema_view
-from rest_framework import viewsets
+from rest_framework import permissions, viewsets
 
-from accounts.permissions import IsLibrarianOrAdmin
+from accounts.permissions import CanDeleteOwnBookOrStaff
 
 from .filters import BookFilter
 from .models import Book
@@ -30,5 +30,10 @@ class BookViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action in ("list", "retrieve"):
-            return super().get_permissions()
-        return [IsLibrarianOrAdmin()]
+            return [permissions.AllowAny()]
+        if self.action == "destroy":
+            return [permissions.IsAuthenticated(), CanDeleteOwnBookOrStaff()]
+        return [permissions.IsAuthenticated()]
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
